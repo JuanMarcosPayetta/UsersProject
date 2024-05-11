@@ -4,7 +4,6 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-
 class Kernel extends ConsoleKernel
 {
     /**
@@ -25,7 +24,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // Run the consumeUsers method in UserController every 5 minutes (Executed in Linux by script configure-task)
-        $schedule->call('App\Http\Controllers\UserController@consumeUsers')->everyFiveMinutes();
+        $schedule->call('App\Http\Controllers\UserController@consumeUsers')->everyMinute()
+            ->appendOutputTo(storage_path('logs/schedule.log'));
+
     }
 
     /**
